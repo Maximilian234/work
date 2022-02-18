@@ -2,14 +2,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { Message } from "./message";
+import { App } from "./message";
 
 
-const name = "Maxim";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Message myname={ name }/>
+    <App/>
   </React.StrictMode>,
   document.getElementById("root")
 );
