@@ -2,14 +2,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { Message } from "./message";
+import { App } from "./message";
+import {createTheme } from "@mui/material";
+import {ThemeProvider} from "@emotion/react";
 
 
-const name = "Maxim";
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <Message myname={ name }/>
+    <ThemeProvider theme={theme}>
+    <App/>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
