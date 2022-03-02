@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import "./style.css";
+import { useState, useEffect, useRef } from "react";
+import { useStyles } from "./messages-style.js";
 import "./common";
 import { AUTHOR } from "./common";
 import {
@@ -11,23 +11,19 @@ import {
   ListItemText,
   TextField,
 } from "@mui/material";
-import { AccountCircle, Android, Chat, Send } from "@mui/icons-material";
-import Chtaroom from "../list/list";
-// import { render } from "react-dom";
-// import { propsToClassKey } from "@mui/styles";
+import { AccountCircle, Android, Send } from "@mui/icons-material";
 
 export const App = () => {
+  const stk = useStyles();
+  const ref = useRef();
   const [value, setValue] = useState("");
+
   const [messagelist, setMessagelist] = useState([]);
   // messagelist - это переменная массива, которую хочу использовать.
   // setMessagelist - это функция, для изменения значения массива messageList
   // useState - это функция для изменения состояния. возвращает массив;
   // messagelist - это значение по умолчанию для переменной состояния. Как обычная переменная
   // Вызывая функцию setMessagelist для изменения значения messagelist в используемом компоненте, например handleButton, будет повторно активирован хуком useState([]) и начнет заново отображаться с новым значением messagelist
-
-  const Elem = (props) => {
-    return <h2> {props.render("Выбрать чат")} </h2>;
-  };
 
   useEffect(() => {
     let timeOutBot = null;
@@ -71,10 +67,9 @@ export const App = () => {
   };
 
   return (
-    <div className="container">
-      <div className="containerBox">
-        
-        <div className="boxChat">
+    <div ref={ref} className={stk.container}>
+      <>
+        <div className={stk.boxChat}>
           <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           >
@@ -96,7 +91,7 @@ export const App = () => {
             })}
           </List>
         </div>
-        <div className="boxInput">
+        <div className={stk.boxInput}>
           <TextField
             autoFocus
             color="secondary"
@@ -108,19 +103,15 @@ export const App = () => {
             onChange={handleClick}
             fullWidth
           />
-
-          <IconButton className="button" type={"button"} onClick={handleButton}>
+          <IconButton
+            className={stk.button}
+            type={"button"}
+            onClick={handleButton}
+          >
             <Send />
           </IconButton>
         </div>
-      </div>
-      <Elem
-        render={(num) => {
-          return <div>{num}</div>;
-        }}
-      />
-      <div children={<Chat />} />
-      <Chtaroom/>
+      </>
     </div>
   );
 };
