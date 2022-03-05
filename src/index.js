@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { createTheme } from "@mui/material";
@@ -9,6 +9,8 @@ import Home from "./pages/home/home";
 import Profile from "./pages/profile/profile";
 import Chats from "./pages/chats/chats";
 import { NotFound } from "./notFound";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const theme = createTheme({
   palette: {
@@ -16,19 +18,27 @@ const theme = createTheme({
   },
 });
 
+
+export const LogData = React.createContext();
+// createContext() - это функция, для создания нового объекта контекста. этот объект содержит два компонента Provider Cosumer
+
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-          <Header />
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/profile" element={<Profile/>}/>
-          <Route path="/chat/*" element={<Chats/>}/>
-          <Route path="*" element={<NotFound/>}/>
-        </Routes>
+          <LogData.Provider value={{ data: ["03.08.", "04.08"] }}>  
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/chat/*" element={<Chats />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>        
+          </LogData.Provider>   
       </BrowserRouter>
     </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
