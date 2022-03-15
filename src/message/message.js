@@ -12,13 +12,23 @@ import {
   TextField,
 } from "@mui/material";
 import { AccountCircle, Android, Send } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { addMessage } from "../store/messages2/action.js";
 
 export const App = () => {
   const stk = useStyles();
   const ref = useRef();
   const [value, setValue] = useState("");
-
+  const { name } = useSelector((state) => state.profile);
   const [messagelist, setMessagelist] = useState([]);
+
+  const messages2 = useSelector(state => state.messages2.messageList2);
+  const { chatId } = useParams();
+  const getMessagesByChatId = messages2[chatId];
+
+  const dispatch = useDispatch();
+
   // messagelist - это переменная массива, которую хочу использовать.
   // setMessagelist - это функция, для изменения значения массива messageList
   // useState - это функция для изменения состояния. возвращает массив;
@@ -30,7 +40,6 @@ export const App = () => {
     const lastmessage = messagelist[messagelist.length - 1];
 
     if (lastmessage?.user !== AUTHOR.bot && messagelist.length) {
-      console.log("ok");
       timeOutBot = setTimeout(() => {
         setMessagelist([
           ...messagelist,
@@ -52,19 +61,15 @@ export const App = () => {
   };
 
   const handleButton = () => {
-    if (value) {
-      setMessagelist([
-        ...messagelist,
-        {
-          user: AUTHOR.user,
-          value,
-        },
-      ]);
-      setValue("");
-    } else {
-      alert("error");
+    if(value !== '') {
+      const message = {
+        user: name,
+        value,
+      }
+      dispatch(addMessage(chatId, message))
+      setValue('');
     }
-  };
+  }
 
   return (
     <div ref={ref} className={stk.container}>
@@ -73,19 +78,20 @@ export const App = () => {
           <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           >
-            {messagelist.map((item, keyId) => {
+            {getMessagesByChatId?.map((item, keyId) => {
               return (
                 <ListItem key={keyId}>
                   <ListItemAvatar>
                     <Avatar>
-                      {item.user === AUTHOR.user ? (
-                        <AccountCircle />
+                      {item.user !== AUTHOR.bot ? (
+                        <AccountCircle alt={name} />
                       ) : (
                         <Android />
                       )}
                     </Avatar>
-                    <ListItemText>{item.value}</ListItemText>
+                    <ListItemText secondary={item.user} />
                   </ListItemAvatar>
+                  {item.value}
                 </ListItem>
               );
             })}
@@ -117,3 +123,21 @@ export const App = () => {
 };
 
 export default App;
+
+
+
+
+// const handleButton = () => {
+  //   if (value) {
+  //     setMessagelist([
+  //       ...messagelist,
+  //       {
+  //         user: name,
+  //         value,
+  //       },
+  //     ]);
+  //     setValue("");
+  //   } else {
+  //     alert("error");
+  //   }
+  // };

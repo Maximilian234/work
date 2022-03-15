@@ -12,6 +12,7 @@ import { NotFound } from "./notFound";
 import { Provider } from "react-redux";
 import store from "./store";
 
+
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -31,10 +32,11 @@ ReactDOM.render(
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/chat/*" element={<Chats />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="chat/:id" element={<Chats />} />
+              <Route path="chat" element={<Chats />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>        
+            </Routes>
           </LogData.Provider>   
       </BrowserRouter>
     </ThemeProvider>

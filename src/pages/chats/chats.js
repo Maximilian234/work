@@ -1,9 +1,11 @@
 import Chtaroom from "../../list/list";
 import App from "../../message/message";
 import { useStyles } from "./use-styles";
+import { useParams } from "react-router-dom";
 
 export const Chats = () => {
   const st = useStyles();
+  const {id} = useParams();
   return (
     <section>
       <h1 className={st.h1}>Стр.ЧАТ</h1>
@@ -11,9 +13,9 @@ export const Chats = () => {
         <header className={st.header}>
           <Chtaroom className={st.chatroomUl} />
         </header>
-        <content className={st.content}>
+        <div className={st.content}>
           <App />
-        </content>
+        </div>
       </div>
     </section>
   );

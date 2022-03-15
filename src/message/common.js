@@ -1,5 +1,9 @@
+import { useSelector } from "react-redux"
+
+const {name} = useSelector
+
 export const AUTHOR = {
-    user: "Maxim Mescheryakov",
+    user: {name},
     bot: "Bot",
     textBot: "Hellow Im Bot"
 }
