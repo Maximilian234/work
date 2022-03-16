@@ -7,17 +7,17 @@ const initialState = {
 const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MESSAGE:
-      const { chatId, message } = action.payload;
-      const currentList = state.messageList2[chatId] || [];
+      const { id, message } = action.payload; // деструктуризация объекта
+      const currentList = state.messageList2[id] || [];
       return {
         ...state,
         messageList2: {
           ...state.messageList2,
-          [chatId]: [
+          [id]: [
             ...currentList,
             {
               ...message,
-              id: `${chatId}${currentList.length}`,
+              id: `${id}${currentList.length}`,
             },
           ],
         },

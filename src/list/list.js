@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addChat } from "../store/chats2/action";
-import { useParams } from "react-router-dom";
 import  "./list.css"
 
 export const Chtaroom = () => {
@@ -13,7 +12,6 @@ export const Chtaroom = () => {
   const [chatName, setChatName] = useState('');
   const dispatch = useDispatch();
   const chats = useSelector(state=> state.chats.chatList);// chats указываем без { } - без скобок т.к. chatList - пустой
-  const {id} = useParams();
 
 
   const handleOpen = () => setVisible(true);  

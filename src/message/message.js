@@ -16,16 +16,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addMessage } from "../store/messages2/action.js";
 
+
 export const App = () => {
   const stk = useStyles();
   const ref = useRef();
   const [value, setValue] = useState("");
   const { name } = useSelector((state) => state.profile);
-  const [messagelist, setMessagelist] = useState([]);
 
   const messages2 = useSelector(state => state.messages2.messageList2);
-  const { chatId } = useParams();
-  const getMessagesByChatId = messages2[chatId];
+  const {id } = useParams();
+  const getMessagesByChatId = messages2[id];
+
+
+
 
   const dispatch = useDispatch();
 
@@ -35,20 +38,6 @@ export const App = () => {
   // messagelist - это значение по умолчанию для переменной состояния. Как обычная переменная
   // Вызывая функцию setMessagelist для изменения значения messagelist в используемом компоненте, например handleButton, будет повторно активирован хуком useState([]) и начнет заново отображаться с новым значением messagelist
 
-  useEffect(() => {
-    let timeOutBot = null;
-    const lastmessage = messagelist[messagelist.length - 1];
-
-    if (lastmessage?.user !== AUTHOR.bot && messagelist.length) {
-      timeOutBot = setTimeout(() => {
-        setMessagelist([
-          ...messagelist,
-          { user: AUTHOR.bot, value: AUTHOR.textBot },
-        ]);
-      }, 2500);
-    }
-    return () => clearInterval(timeOutBot);
-  }, [messagelist]);
 
   const handleClick = (event) => {
     setValue(event.target.value);
@@ -64,9 +53,9 @@ export const App = () => {
     if(value !== '') {
       const message = {
         user: name,
-        value,
+        text: value,
       }
-      dispatch(addMessage(chatId, message))
+      dispatch(addMessage(id, message))
       setValue('');
     }
   }
@@ -91,7 +80,7 @@ export const App = () => {
                     </Avatar>
                     <ListItemText secondary={item.user} />
                   </ListItemAvatar>
-                  {item.value}
+                  {item.text}
                 </ListItem>
               );
             })}
@@ -125,6 +114,7 @@ export const App = () => {
 export default App;
 
 
+// const [messagelist, setMessagelist] = useState([]);
 
 
 // const handleButton = () => {
@@ -141,3 +131,19 @@ export default App;
   //     alert("error");
   //   }
   // };
+
+  
+  // useEffect(() => {
+  //   let timeOutBot = null;
+  //   const lastmessage = messagelist[messagelist.length - 1];
+
+  //   if (lastmessage?.user !== AUTHOR.bot && messagelist.length) {
+  //     timeOutBot = setTimeout(() => {
+  //       setMessagelist([
+  //         ...messagelist,
+  //         { user: AUTHOR.bot, value: AUTHOR.textBot },
+  //       ]);
+  //     }, 2500);
+  //   }
+  //   return () => clearInterval(timeOutBot);
+  // }, [messagelist]);

@@ -1,11 +1,10 @@
 import Chtaroom from "../../list/list";
 import App from "../../message/message";
 import { useStyles } from "./use-styles";
-import { useParams } from "react-router-dom";
 
 export const Chats = () => {
   const st = useStyles();
-  const {id} = useParams();
+
   return (
     <section>
       <h1 className={st.h1}>Стр.ЧАТ</h1>
