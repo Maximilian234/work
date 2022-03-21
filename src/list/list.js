@@ -1,9 +1,10 @@
 import { Button, Dialog, ListItemText, TextField } from "@material-ui/core";
+import { Delete } from "@mui/icons-material";
 import { List } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addChat } from "../store/chats2/action";
+import { addChat, deleteChat } from "../store/chats2/action";
 import  "./list.css"
 
 export const Chtaroom = () => {
@@ -22,7 +23,10 @@ export const Chtaroom = () => {
     setChatName('');
     setVisible(false);
   }
+  const removeChat = (index) => {
+    dispatch(deleteChat(index));
 
+  }
 
   return (
 <>
@@ -37,7 +41,8 @@ export const Chtaroom = () => {
               <ListItemText className='text' key={keymap}>
                 <Link className='link' key={keymap.id} to={`/chat/${chat.id}`}>
                   {chat.name}
-                </Link>          
+                </Link>
+                <button onClick={ ()=> removeChat(keymap)}><Delete/></button>       
             </ListItemText>
             );
           })}         
